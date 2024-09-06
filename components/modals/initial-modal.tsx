@@ -39,6 +39,8 @@ const InitialModal = () => {
         console.log(values)
     }
 
+    //hi there
+
     if(!isMounted){
         return null;
     }
