@@ -20,9 +20,10 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
+
 import { FileUpload } from "../file-upload";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -32,14 +33,14 @@ const formSchema = z.object({
     message: "Server image is required",
   }),
 });
-const InitialModal = () => {
-  const [isMounted, setIsMounted] = useState(false);
+export const CreateServerModal = () => {
+  const {isOpen,onClose,type} =useModal();
 
   const router = useRouter();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isModalOpen=isOpen&&type==="createServer";
+
+ 
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -56,7 +57,7 @@ const InitialModal = () => {
       await axios.post("/api/servers",values);
       form.reset();
       router.refresh();
-      window.location.reload()
+      
 
       
     } catch (error) {
@@ -65,12 +66,14 @@ const InitialModal = () => {
     }
   };
 
-  if (!isMounted) {
-    return null;
+  const handleClose=()=>{
+    form.reset();
+    onClose();
   }
+
   return (
     <div>
-      <Dialog open>
+      <Dialog open={isModalOpen} onOpenChange={handleClose}>
         <DialogContent className="bg-white text-black p-0 overflow-hidden">
           <DialogHeader className="pt-8 px-6">
             <DialogTitle className="font-bold text-2xl text-center text-zinc">
@@ -140,4 +143,4 @@ const InitialModal = () => {
   );
 };
 
-export default InitialModal;
+
