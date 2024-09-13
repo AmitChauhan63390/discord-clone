@@ -50,7 +50,7 @@ export const ServerSidebar = async ({serverId}:ServerSidebarProps) => {
     const roleIconMap={
         [MemberRole.GUEST]:null,
         [MemberRole.MODERATOR]:<ShieldCheck className="text-indigo-500 mr-2 h-4 w-4 "/>,
-        [MemberRole.ADMIN]:<ShieldAlert className="text-indigo-500 mr-2 h-4 w-4 "/>
+        [MemberRole.ADMIN]:<ShieldAlert className="text-rose-500 mr-2 h-4 w-4 "/>
     }
 
     const textChannels = server?.channels.filter((channel)=>channel.type===ChannelType.TEXT);
@@ -95,6 +95,16 @@ export const ServerSidebar = async ({serverId}:ServerSidebarProps) => {
                             id:channel.id,
                             name:channel.name,
                             icon:iconMap[channel.type],
+                            
+                        }))
+                    },
+                    {
+                        label:"Members",
+                        type:"member",
+                        data:members?.map((member)=>({
+                            id:member.id,
+                            name:member.profile.name,
+                            icon:roleIconMap[member.role],
                             
                         }))
                     }
