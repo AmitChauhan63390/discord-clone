@@ -27,8 +27,9 @@ export const ServerIdLayout=async({children,params}:{children:React.ReactNode;
     if(!server) return redirect("/");
     return (
         <div className="h-full">
-            <div className=" md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
+            <div className="max-sm:hidden md:flex h-full w-60 z-20 md:flex-col fixed inset-y-0">
             <ServerSidebar serverId={params.serverId}/>
+            
 
             </div>
             <main className="h-full md:pl-60">

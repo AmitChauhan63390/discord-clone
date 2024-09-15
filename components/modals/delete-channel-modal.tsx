@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import {
@@ -17,16 +19,20 @@ import { useModal } from "@/hooks/use-modal-store";
 
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 
-export const DeleteServerModal = () => {
-  const {onOpen,isOpen,onClose,type,data} =useModal();
+import qs from "query-string";
+
+
+
+export const DeleteChannelModal = () => {
+  const {isOpen,onClose,type,data} =useModal();
   
+  
+  const isModalOpen=isOpen&&type==="deleteChannel";
 
-  const isModalOpen=isOpen&&type==="deleteServer";
-
-  const {server}=data;
+  const {server,channel}=data;
 
   const [isLoading,setIsLoading]=useState(false);
   const router=useRouter();
@@ -36,10 +42,16 @@ export const DeleteServerModal = () => {
   const onClick=async()=>{
     try {
       setIsLoading(true)
-      await axios.delete(`/api/servers/${server?.id}`)
+      const url  = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: {
+          serverId:server?.id
+        }
+      })
+      await axios.delete(url)
       onClose();
       router.refresh();
-      router.push("/")
+      router.push(`/server/${server?.id}`)
     } catch (error) {
       console.log("Leaver server error",error)
     }
@@ -55,10 +67,10 @@ export const DeleteServerModal = () => {
         <DialogContent className="bg-white text-black p-0 overflow-hidden">
           <DialogHeader className="pt-8 px-6">
             <DialogTitle className="font-bold text-2xl text-center text-zinc">
-              Delete Server
+              Delete Channel
             </DialogTitle>
             <DialogDescription className="text-center text-zinc-500">
-              Are you sure you want to delete <span className="font-semibold text-indigo-500">{server?.name}</span>?
+              Are you sure you want to delete <span className="font-semibold text-indigo-500">{channel?.name}</span>?
             </DialogDescription>
             
           </DialogHeader>
@@ -81,3 +93,6 @@ export const DeleteServerModal = () => {
     </div>
   );
 };
+
+
+
