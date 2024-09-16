@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import { ModalProvider } from "@/components/providers/modal-provider";
-import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
+
 
 const font = Open_Sans({ subsets: ["latin"] });
 
