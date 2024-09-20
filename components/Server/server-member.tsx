@@ -25,7 +25,12 @@ export const ServerMember=({member,server}:ServerMemberProps)=>{
     const params =useParams();
     const router=useRouter();
     const onClick=()=>{
-        router.push(`/server/${params.serverId}/conversations/${member.id}`)
+        if(params?.serverId){
+            router.push(`/server/${params.serverId}/conversations/${member.id}`)
+        }
+        else{
+            console.log("Server ID missing")
+        }
     }
 
     const icon = roleIconMap[member.role]
