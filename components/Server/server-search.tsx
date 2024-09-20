@@ -44,12 +44,14 @@ export const ServerSearch = ({data}:ServerSearchProps) => {
     const onClick =({id,type}:{id:string,type:"channel"|"member"})=>{
         setOpen(false)
 
-        if(type==="member"){
+        if(type==="member"&&params?.serverId){
             return router.push(`/server/${params.serverId}/conversations/${id}`)
 
         }
-        if(type==="channel"){
+        else if(type==="channel"&&params?.serverId){
             return router.push(`/server/${params.serverId}/channels/${id}`)
+        }else{
+            console.log("Server ID missing")
         }
 
     }
