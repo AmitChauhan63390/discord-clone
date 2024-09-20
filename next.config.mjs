@@ -15,7 +15,14 @@ const nextConfig = {
                 async_hooks: false, // Add this line to ignore 'node:async_hooks' in browser builds
             },
             fullySpecified: false, // Resolve the "node:" URI issue
-        };
+        },
+
+        config.externals.push({
+            
+            "utf-8-validate": "commonjs utf-8-validate",
+            bufferutil: "commonjs bufferutil",
+            
+        })
 
         return config;
     },
