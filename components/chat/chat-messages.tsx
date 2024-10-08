@@ -3,7 +3,7 @@
 import { Member, Message, Profile } from "@prisma/client";
 import { ChatWelcome } from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
-import { Loader, Loader2, ServerCrash } from "lucide-react";
+import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment, useRef, ElementRef } from "react";
 import { ChatItem } from "./chat-item";
 import { format } from "date-fns";
@@ -56,7 +56,7 @@ export const ChatMessages = ({
   useChatScroll({
     chatRef,
     bottomRef,
-    shouldLoadMore: !isFetchingNextPage&& !!hasNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     loadMore: fetchNextPage,
     count: data?.pages[0].items.length,
   });
@@ -86,14 +86,18 @@ export const ChatMessages = ({
     <div ref={chatRef} className="flex-1 flex flex-col overflow-y-auto ">
       {!hasNextPage && <div className="flex-1" />}
       {!hasNextPage && <ChatWelcome type={type} name={name} />}
-      {hasNextPage&&(
+      {hasNextPage && (
         <div className="flex justify-center">
-          {isFetchingNextPage?(
-            <Loader2 className="h-6 w-6 text-zinc-500 animate-spin my-4"/>
-            
-          ):(<button onClick={()=>fetchNextPage()} className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition">
-            Load previous messages
-          </button>)}
+          {isFetchingNextPage ? (
+            <Loader2 className="h-6 w-6 text-zinc-500 animate-spin my-4" />
+          ) : (
+            <button
+              onClick={() => fetchNextPage()}
+              className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition"
+            >
+              Load previous messages
+            </button>
+          )}
         </div>
       )}
       <div className="flex flex-col-reverse mt-auto ">

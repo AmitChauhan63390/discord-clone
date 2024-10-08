@@ -10,6 +10,7 @@ interface ChatQueryProps {
   paramValue: string; // Optional in case we want to fetch from params
 }
 
+
 export const useChatQuery = ({
   queryKey,
   apiUrl,
